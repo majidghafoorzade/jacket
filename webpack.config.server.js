@@ -13,14 +13,20 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      client: path.resolve(__dirname, 'src/client/'),
+      server: path.resolve(__dirname, 'src/server/'),
+    },
   },
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        use: [
-          'ts-loader',
-        ]
+        test: /\.(ts|tsx)$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+        resolve: {
+          extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss'],
+        },
       }
     ]
   },
