@@ -1,11 +1,14 @@
-import express from "express";
-import { Request, Response } from "express";
-import { renderApp } from "./server/utils/renderApp";
+import express, { Request, Response } from "express";
+import compression from "compression";
+import { renderApp } from "server/utils/renderApp";
 
 const { PORT = 3000 } = process.env;
 
 // Init Express server
 const app = express();
+
+// Enable gzip compression
+app.use(compression());
 
 // Config static files directories
 app.use(express.static("public"));
