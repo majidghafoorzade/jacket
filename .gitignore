@@ -1,3 +1,6 @@
+# unnecessary directories
 build
 node_modules
+
+# log files
 *.log
