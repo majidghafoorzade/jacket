@@ -7,7 +7,7 @@ export const Home = () => {
     <div>
       <h1>Home page</h1>
       <ul>
-        <li>{data.task.title}</li>
+        <li>{data.post.title.rendered}</li>
       </ul>
       <Link to="/about">About</Link>
     </div>
