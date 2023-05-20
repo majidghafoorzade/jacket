@@ -7,6 +7,10 @@ const { PORT = 3000 } = process.env;
 // Init Express server
 const app = express();
 
+// Config static files directories
+app.use(express.static("public"));
+app.use("/static", express.static("build/static"));
+
 // Configure template engine
 app.set("view engine", "hbs");
 app.set("views", "./src/server/views");

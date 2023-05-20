@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "Frontend SSR Framework based on React & Express",
   "scripts": {
-    "build": "webpack --config=webpack.config.server.js",
-    "watch": "webpack --config=webpack.config.server.js --watch",
-    "start:prod": "yarn build && node ./build/index.js",
-    "start:dev": "concurrently \"yarn watch\" \"nodemon ./build/index.js\""
+    "server:build": "webpack --config=webpack.config.server.js",
+    "server:watch": "webpack --config=webpack.config.server.js --watch",
+    "server:prod": "yarn server:build && node ./build/index.js",
+    "server:dev": "concurrently \"yarn server:watch\" \"nodemon ./build/index.js\"",
+
+    "client:build": "webpack --config=webpack.config.client.js",
+    "client:watch": "webpack --config=webpack.config.client.js --watch",
+
+    "build": "yarn server:build && yarn client:build",
+    "dev": "concurrently \"yarn server:dev\" \"yarn client:watch\""
   },
   "keywords": [],
   "author": "Majid Ghafoorzade",
