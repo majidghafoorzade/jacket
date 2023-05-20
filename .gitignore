@@ -2,5 +2,9 @@
 build
 node_modules
 
+# env files
+.env
+.env.local
+
 # log files
 *.log

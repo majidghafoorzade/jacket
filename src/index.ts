@@ -1,7 +1,12 @@
+import dotEnv from "dotenv";
 import express, { Request, Response } from "express";
 import compression from "compression";
 import { renderApp } from "server/utils/renderApp";
 
+// init dotenv
+dotEnv.config();
+
+// get env vars
 const { PORT = 3000 } = process.env;
 
 // Init Express server
