@@ -16,8 +16,8 @@ app.set("view engine", "hbs");
 app.set("views", "./src/server/views");
 
 // Configure application routes
-app.get("/*", (req: Request, res: Response) => {
-  const { markup } = renderApp();
+app.get("/*", async (req: Request, res: Response) => {
+  const { markup } = await renderApp(req);
 
   res.render("app.hbs", {
     markup,
