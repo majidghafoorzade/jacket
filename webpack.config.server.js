@@ -1,34 +1,15 @@
-const path = require('path');
+const { merge } = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 
-const { NODE_ENV = 'production' } = process.env;
+const baseConfig = require('./webpack.config');
 
-module.exports = {
-  entry: './src/index.ts',
-  mode: NODE_ENV,
-  target: 'node',
+module.exports = merge(baseConfig("node"), {
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'index.js'
+    libraryTarget: 'commonjs2',
   },
-  resolve: {
-    extensions: ['.ts', '.js'],
-    alias: {
-      client: path.resolve(__dirname, 'src/client/'),
-      server: path.resolve(__dirname, 'src/server/'),
-    },
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(ts|tsx)$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-        resolve: {
-          extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss'],
-        },
-      }
-    ]
-  },
-  externals: [nodeExternals()]
-}
+  externals: [nodeExternals()],
+});
