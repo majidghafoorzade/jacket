@@ -1,10 +1,13 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const { NODE_ENV = 'production' } = process.env;
 
 module.exports = (target) => {
 
   const isWeb = target === "web";
+
+  const localIdentName = NODE_ENV === 'production' ? '[hash:base64:5]' : 'local_[hash:base64:5]';
 
   return {
     entry: isWeb ? './src/client/index.tsx' : './src/index.ts',
@@ -30,8 +33,44 @@ module.exports = (target) => {
           resolve: {
             extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss'],
           },
+        },
+        {
+          test: /\.css$/i,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  auto: true,
+                  localIdentName,
+                },
+              },
+            }
+          ],
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  auto: true,
+                  localIdentName,
+                },
+              },
+            },
+            "sass-loader",
+          ],
         }
       ]
-    }
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'static/css/app.min.css',
+      }),
+    ]
   }
 }
