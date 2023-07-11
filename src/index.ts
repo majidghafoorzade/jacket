@@ -17,7 +17,7 @@ app.use(compression());
 
 // Config static files directories
 app.use(express.static("public"));
-app.use("/static", express.static("build/static"));
+app.use("/static", express.static("build/client"));
 
 // Configure template engine
 app.set("view engine", "hbs");

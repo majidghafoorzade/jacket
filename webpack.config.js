@@ -15,7 +15,7 @@ module.exports = (target) => {
     target,
     output: {
       path: path.resolve(__dirname, 'build'),
-      filename: isWeb ? 'static/js/app.min.js' : 'index.js'
+      filename: isWeb ? 'client/js/client.min.js' : 'server/server.js'
     },
     resolve: {
       extensions: ['.ts', '.js'],
@@ -69,7 +69,7 @@ module.exports = (target) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'static/css/app.min.css',
+        filename: 'client/css/app.min.css',
       }),
     ]
   }
