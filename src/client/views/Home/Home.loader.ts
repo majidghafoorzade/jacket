@@ -1,9 +1,15 @@
 import axios from "axios";
-import { json } from "react-router-dom";
+import { withCache } from "client/providers";
 
-export const loader = async () => {
-  const res = await axios.get(
-    "https://learning.emofid.com/wp-json/wp/v2/posts/27341"
-  );
-  return json({ post: res.data });
-};
+export const loader = withCache(
+  async () => {
+    const res = await axios.get(
+      "https://learning.emofid.com/wp-json/wp/v2/posts/27341"
+    );
+    return { post: res.data };
+  },
+  {
+    key: "home_data",
+    ttl: 30000,
+  }
+);
