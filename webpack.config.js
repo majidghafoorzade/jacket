@@ -4,12 +4,9 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 
 const { NODE_ENV = 'production' } = process.env;
 
-const BUILD_PATH = path.resolve(__dirname, 'build')
-
 module.exports = (target) => {
 
   const isWeb = target === "web";
-  const outputPath = isWeb ? path.join(BUILD_PATH, 'client') : path.join(BUILD_PATH, 'server');
 
   const localIdentName = NODE_ENV === 'production' ? '[hash:base64:5]' : 'local_[hash:base64:5]';
 
@@ -18,9 +15,8 @@ module.exports = (target) => {
     mode: NODE_ENV,
     target,
     output: {
-      path: outputPath,
-      // publicPath: isWeb ? "/build/client/" : "/build/server/",
-      filename: isWeb ? 'client-[name].js' : 'server-[name].js'
+      path: path.resolve(__dirname, 'build'),
+      filename: isWeb ? 'client/js/[name].js' : 'server/[name].js'
     },
     resolve: {
       extensions: ['.ts', '.js'],
@@ -80,10 +76,10 @@ module.exports = (target) => {
       ]
     },
     plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'client/css/app.min.css',
+      }),
       new LoadablePlugin(),
-      // new MiniCssExtractPlugin({
-      //   filename: 'client/css/app.min.css',
-      // }),
     ],
     optimization: {
       splitChunks: {

@@ -15,7 +15,7 @@ export const renderApp = async (req: Request) => {
   const extractor = new ChunkExtractor({
     // entrypoints: ["main"],
     // publicPath: "/assets/",
-    statsFile: path.resolve(prjBase, "build/server/loadable-stats.json"),
+    statsFile: path.resolve(prjBase, "build/loadable-stats.json"),
   });
 
   const handler = createStaticHandler(routes);

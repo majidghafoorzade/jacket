@@ -11,7 +11,7 @@
     "client:watch": "webpack --config=webpack.config.client.js --watch",
     "build": "yarn server:build && yarn client:build",
     "dev": "concurrently \"yarn server:dev\" \"yarn client:watch\"",
-    "start": "yarn build && node ./build/server/server-main.js"
+    "start": "yarn build && node ./build/server/main.js"
   },
   "keywords": [],
   "author": "Majid Ghafoorzade",
