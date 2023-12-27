@@ -3,10 +3,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 
 const { NODE_ENV = 'production' } = process.env;
+const BUILD_PATH = path.resolve(__dirname, 'build');
 
 module.exports = (target) => {
 
   const isWeb = target === "web";
+  const outputPath = isWeb ? path.join(__dirname, 'build/client/js') : path.join(__dirname, 'build/server');
 
   const localIdentName = NODE_ENV === 'production' ? '[hash:base64:5]' : 'local_[hash:base64:5]';
 
@@ -15,8 +17,8 @@ module.exports = (target) => {
     mode: NODE_ENV,
     target,
     output: {
-      path: path.resolve(__dirname, 'build'),
-      filename: isWeb ? 'client/js/[name].js' : 'server/[name].js'
+      path: outputPath,
+      filename: '[name].js'
     },
     resolve: {
       extensions: ['.ts', '.js'],

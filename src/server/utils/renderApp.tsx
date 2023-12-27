@@ -13,9 +13,9 @@ import { createFetchRequest } from "client/config/router/request";
 export const renderApp = async (req: Request) => {
   const prjBase = process.cwd();
   const extractor = new ChunkExtractor({
-    // entrypoints: ["main"],
-    // publicPath: "/assets/",
-    statsFile: path.resolve(prjBase, "build/loadable-stats.json"),
+    entrypoints: ["main"],
+    publicPath: "/static/js/",
+    statsFile: path.resolve(prjBase, "build/client/js/loadable-stats.json"),
   });
 
   const handler = createStaticHandler(routes);
@@ -29,7 +29,10 @@ export const renderApp = async (req: Request) => {
   );
 
   const markup = renderToString(jsx);
-  const scriptTags = extractor.getScriptTags();
 
-  return { markup, scriptTags };
+  const scriptTags = extractor.getScriptTags();
+  const linkTags = extractor.getLinkTags();
+  const styleTags = extractor.getStyleTags();
+
+  return { markup, scriptTags, linkTags, styleTags };
 };
