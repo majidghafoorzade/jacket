@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="/static/css/app.min.css">
+    {{!-- <link rel="stylesheet" href="/static/css/app.min.css"> --}}
 </head>
 <body>
     <div id="root">{{{ markup }}}</div>
 
-    <script src="/static/js/client.min.js" defer></script>
+    {{!-- <script src="/static/js/client.min.js" defer></script> --}}
+
+    {{{ scriptTags }}}
 </body>
 </html>

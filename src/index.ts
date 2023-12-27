@@ -25,10 +25,11 @@ app.set("views", "./src/server/views");
 
 // Configure application routes
 app.get("/*", async (req: Request, res: Response) => {
-  const { markup } = await renderApp(req);
+  const { markup, scriptTags } = await renderApp(req);
 
   res.render("app.hbs", {
     markup,
+    scriptTags,
   });
 });
 

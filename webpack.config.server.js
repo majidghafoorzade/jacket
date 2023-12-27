@@ -11,5 +11,5 @@ module.exports = merge(baseConfig("node"), {
   output: {
     libraryTarget: 'commonjs2',
   },
-  externals: [nodeExternals()],
+  externals: ['@loadable/component', nodeExternals()],
 });

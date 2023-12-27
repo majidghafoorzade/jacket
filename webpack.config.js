@@ -1,11 +1,15 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 const { NODE_ENV = 'production' } = process.env;
+
+const BUILD_PATH = path.resolve(__dirname, 'build')
 
 module.exports = (target) => {
 
   const isWeb = target === "web";
+  const outputPath = isWeb ? path.join(BUILD_PATH, 'client') : path.join(BUILD_PATH, 'server');
 
   const localIdentName = NODE_ENV === 'production' ? '[hash:base64:5]' : 'local_[hash:base64:5]';
 
@@ -14,8 +18,9 @@ module.exports = (target) => {
     mode: NODE_ENV,
     target,
     output: {
-      path: path.resolve(__dirname, 'build'),
-      filename: isWeb ? 'client/js/client.min.js' : 'server/server.js'
+      path: outputPath,
+      // publicPath: isWeb ? "/build/client/" : "/build/server/",
+      filename: isWeb ? 'client-[name].js' : 'server-[name].js'
     },
     resolve: {
       extensions: ['.ts', '.js'],
@@ -28,7 +33,14 @@ module.exports = (target) => {
       rules: [
         {
           test: /\.(ts|tsx)$/,
-          use: 'ts-loader',
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                caller: { target },
+              },
+            }
+          ],
           exclude: /node_modules/,
           resolve: {
             extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss'],
@@ -68,9 +80,16 @@ module.exports = (target) => {
       ]
     },
     plugins: [
-      new MiniCssExtractPlugin({
-        filename: 'client/css/app.min.css',
-      }),
-    ]
+      new LoadablePlugin(),
+      // new MiniCssExtractPlugin({
+      //   filename: 'client/css/app.min.css',
+      // }),
+    ],
+    optimization: {
+      splitChunks: {
+        name: 'vendor',
+        chunks: 'initial',
+      },
+    },
   }
 }
